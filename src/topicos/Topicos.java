@@ -5,17 +5,21 @@
  */
 package topicos;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  *
  * @author codehero
  */
 public class Topicos {
-
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Persona person = new Persona();
+        person.muestraMenu();
     }
     
 }
