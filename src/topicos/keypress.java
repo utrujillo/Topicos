@@ -105,11 +105,17 @@ public class keypress extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_nombreActionPerformed
 
     private void txt_nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombreKeyTyped
+        //Float v1 = 10f;
+        //Float v2 = Float.parseFloat( txt_nombre.getText() );
+        //System.out.println( v2 );
         lbl_keyup.setText( txt_nombre.getText() );
     }//GEN-LAST:event_txt_nombreKeyTyped
 
     private void txt_nombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nombreKeyReleased
-        lbl_released.setText( txt_nombre.getText() );
+        //lbl_released.setText( txt_nombre.getText() );
+        Float v1 = 10f;
+        Float v2 = Float.parseFloat( txt_nombre.getText() );
+        System.out.println( v2 );
     }//GEN-LAST:event_txt_nombreKeyReleased
 
     /**
