@@ -7,9 +7,13 @@ package javaDb;
 
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +27,7 @@ public class Conexion {
     private static final String DB = "punto_venta_tec";
     private static final String PATHDB = "jdbc:mysql://localhost:3306/"+ DB;
     private Statement stmt = null;
+    private PreparedStatement pstmt = null;
     
     public Conexion(){
         conexion = null;
@@ -82,5 +87,45 @@ public class Conexion {
             System.out.println("Error en la consulta... \n"+ query +" \n"+ e.getMessage());
         }
         return results;
+    }
+    
+    public void execQuery(String query, String action, ArrayList<Object> values){
+        try {
+            // Preparando la consulta
+            Connection conn = this.getConnection();
+            pstmt = conn.prepareStatement(query);
+            
+            // Setteando los valores en la consulta preparada
+            for (int i = 0; i < values.size(); i++) {
+                try {
+                    switch( values.get(i).getClass().getName() ){
+                        case "java.lang.String":    
+                            System.out.println("Posicion: "+ i +" valor: "+ values.get(i));
+                            pstmt.setString( i + 1, (String) values.get(i)); break;
+                        case "java.lang.Integer":
+                            pstmt.setInt(i, (Integer) values.get(i)); break;
+                        case "java.lang.Float":
+                            pstmt.setFloat( i + 1, (Float) values.get(i)); break;
+                        case "java.lang.Boolean":
+                            pstmt.setBoolean( i + 1, (Boolean) values.get(i)); break;
+                        case "java.lang.Double":
+                            pstmt.setDouble( i + 1, (Double) values.get(i)); break;
+                    }
+                } catch (SQLException ex) {
+                    System.out.println(action +" dato error al settear variable: "+ ex.getMessage());
+                }
+            }
+            
+            // Ejecutando la consulta
+            if( pstmt.executeUpdate() == 1){
+                System.out.println("Elemento "+ action +"...");
+            }else{
+                System.out.println("Elemento no "+ action);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(action +" dato error: "+ e.getMessage());
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 }

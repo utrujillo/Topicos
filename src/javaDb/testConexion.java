@@ -7,6 +7,7 @@ package javaDb;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -18,7 +19,8 @@ public class testConexion {
     public Conexion conexion = new Conexion();
     
     public static void main(String[] args){
-        new testConexion().menu();
+        //new testConexion().menu();
+        new testConexion().insertTableUserPStmt();
     }
     
     public void menu(){
@@ -67,6 +69,23 @@ public class testConexion {
                         + "(nombre, apellidos, type_user) "
                         + "VALUES('Simba','El Rey Leon','Usuario')";
         conexion.execQuery(query, "Insertado");
+    }
+    
+    public void insertTableUserPStmt(){
+        String query = "INSERT INTO user "
+                        + "(nombre, apellidos, type_user) "
+                        + "VALUES(?,?,?)";
+        
+        String nombre = "Son";
+        String apellidos = "Goku";
+        String type_user = "Usuario";
+        
+        ArrayList<Object> values = new ArrayList<Object>();
+        values.add(nombre);
+        values.add(apellidos);
+        values.add(type_user);
+        
+        conexion.execQuery(query, "Insertado", values);
     }
     
     public void deleteTableUser(){
